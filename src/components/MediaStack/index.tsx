@@ -17,9 +17,9 @@ export const MediaStack: React.FC<MediaStackProps> = ({ media }) => {
       {typeof media[0].image !== 'string' && (
         <Media className={classes.mediaOne} resource={media[0].image} />
       )}
-      {typeof media[1].image !== 'string' && (
+      {/* {typeof media[1].image !== 'string' && (
         <Media className={classes.mediaTwo} resource={media[1].image} />
-      )}
+      )} */}
     </div>
   )
 }

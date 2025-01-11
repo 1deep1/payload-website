@@ -12,7 +12,6 @@ import { ArrowIcon } from '@root/icons/ArrowIcon/index.js'
 import { CrosshairIcon } from '@root/icons/CrosshairIcon/index.js'
 import { useAuth } from '@root/providers/Auth/index.js'
 import { useHeaderObserver } from '@root/providers/HeaderIntersectionObserver/index.js'
-import { useStarCount } from '@root/utilities/use-star-count.js'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import * as React from 'react'
@@ -262,8 +261,6 @@ export const MobileNav: React.FC<NavItems> = (props) => {
     }
   }, [isMenuOpen, closeAllModals, openModal])
 
-  const starCount = useStarCount()
-
   return (
     <div className={classes.mobileNav}>
       <div className={classes.menuBar}>
@@ -289,7 +286,6 @@ export const MobileNav: React.FC<NavItems> = (props) => {
                   target="_blank"
                 >
                   <GitHubIcon />
-                  {starCount}
                 </a>
                 {user && <Avatar className={classes.avatar} />}
                 <DocSearch />

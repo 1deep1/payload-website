@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-exports */
 import { revalidateRedirects } from '@hooks/revalidateRedirects'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
@@ -17,7 +17,6 @@ import link from '@root/fields/link'
 import { LabelFeature } from '@root/fields/richText/features/label/server'
 import { LargeBodyFeature } from '@root/fields/richText/features/largeBody/server'
 import { revalidateTag } from 'next/cache'
-import nodemailerSendgrid from 'nodemailer-sendgrid'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -43,14 +42,6 @@ import { refreshMdxToLexical, syncDocs } from './scripts/syncDocs'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
-const sendGridAPIKey = process.env.SENDGRID_API_KEY
-
-const sendgridConfig = {
-  transportOptions: nodemailerSendgrid({
-    apiKey: sendGridAPIKey,
-  }),
-}
 
 export default buildConfig({
   admin: {
@@ -230,10 +221,10 @@ export default buildConfig({
       }),
     ],
   }),
-  email: nodemailerAdapter({
-    defaultFromAddress: 'info@payloadcms.com',
-    defaultFromName: 'Payload',
-    ...sendgridConfig,
+  email: resendAdapter({
+    defaultFromAddress: 'mail@1deep1.com',
+    defaultFromName: 'CMS Website',
+    apiKey: process.env.MAIL_PRIVATE_KEY || '',
   }),
   endpoints: [
     {
@@ -303,7 +294,9 @@ export default buildConfig({
 
               const sendSubmissionToHubSpot = async (): Promise<void> => {
                 const { form, submissionData } = doc
-                const portalID = process.env.NEXT_PRIVATE_HUBSPOT_PORTAL_KEY
+                const portalID = process.env.NEXT_HUBSPOT_PORTAL_ID || ''
+                const portalToken = process.env.NEXT_PORTAL_TOKEN || ''
+
                 const data = {
                   context: {
                     ...('hubspotCookie' in body && { hutk: body?.hubspotCookie }),
@@ -315,18 +308,22 @@ export default buildConfig({
                     value: key.value,
                   })),
                 }
+
                 try {
-                  await fetch(
+                  const hsRes = await fetch(
                     `https://api.hsforms.com/submissions/v3/integration/submit/${portalID}/${form.hubSpotFormID}`,
                     {
                       body: JSON.stringify(data),
                       headers: {
+                        Authorization: `Bearer ${portalToken}`,
                         'Content-Type': 'application/json',
                       },
                       method: 'POST',
                     },
                   )
+                  console.log('HubSpot submission returned status:', hsRes.status)
                 } catch (err: unknown) {
+                  console.log('HubSpot fetch error:', err)
                   req.payload.logger.error({
                     err,
                     msg: 'Fetch to HubSpot form submissions failed',
@@ -358,10 +355,11 @@ export default buildConfig({
       },
     }),
     vercelBlobStorage({
-      cacheControlMaxAge: 60 * 60 * 24 * 365, // 1 year
+      cacheControlMaxAge: 60 * 60 * 24 * 365,
       collections: {
         media: {
-          generateFileURL: ({ filename }) => `https://${process.env.BLOB_STORE_ID}/${filename}`,
+          generateFileURL: ({ filename }) =>
+            `https://${process.env.BLOB_STORE_ID}.public.blob.vercel-storage.com/${filename}`,
         },
       },
       enabled: Boolean(process.env.BLOB_STORAGE_ENABLED) || false,

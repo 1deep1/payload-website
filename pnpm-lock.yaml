@@ -38,6 +38,9 @@ importers:
       '@payloadcms/email-nodemailer':
         specifier: 3.14.1-canary.9545244
         version: 3.14.1-canary.9545244(payload@3.14.1-canary.9545244(graphql@16.8.1)(monaco-editor@0.52.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))
+      '@payloadcms/email-resend':
+        specifier: 3.14.1-canary.9545244
+        version: 3.14.1-canary.9545244(payload@3.14.1-canary.9545244(graphql@16.8.1)(monaco-editor@0.52.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))
       '@payloadcms/live-preview-react':
         specifier: 3.14.1-canary.9545244
         version: 3.14.1-canary.9545244(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1195,6 +1198,12 @@ packages:
 
   '@payloadcms/email-nodemailer@3.14.1-canary.9545244':
     resolution: {integrity: sha512-8pga9cNJ+JpvncPwaA8SG+3TxHwaHejfr2TicnTcdobYJPGwKYfgwslrvq3aWBQ1xYimFA44uQlWRMw1jAzvpA==}
+    engines: {node: ^18.20.2 || >=20.9.0}
+    peerDependencies:
+      payload: 3.14.1-canary.9545244
+
+  '@payloadcms/email-resend@3.14.1-canary.9545244':
+    resolution: {integrity: sha512-vYh6Qv8cuQbTSyzIYuG9fBT2XvSryi7Ccx+u9GRt/ijSThyoc1u17pqHrzUWSRQ+Uag98sUNlt3Gf0nGIaMFLA==}
     engines: {node: ^18.20.2 || >=20.9.0}
     peerDependencies:
       payload: 3.14.1-canary.9545244
@@ -5620,6 +5629,10 @@ snapshots:
   '@payloadcms/email-nodemailer@3.14.1-canary.9545244(payload@3.14.1-canary.9545244(graphql@16.8.1)(monaco-editor@0.52.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))':
     dependencies:
       nodemailer: 6.9.10
+      payload: 3.14.1-canary.9545244(graphql@16.8.1)(monaco-editor@0.52.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)
+
+  '@payloadcms/email-resend@3.14.1-canary.9545244(payload@3.14.1-canary.9545244(graphql@16.8.1)(monaco-editor@0.52.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))':
+    dependencies:
       payload: 3.14.1-canary.9545244(graphql@16.8.1)(monaco-editor@0.52.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)
 
   '@payloadcms/eslint-config@3.9.0(@typescript-eslint/eslint-plugin@8.14.0(@typescript-eslint/parser@8.14.0(eslint@9.17.0)(typescript@5.7.2))(eslint@9.17.0)(typescript@5.7.2))':

@@ -16,6 +16,9 @@ const localhost = process.env.NEXT_PUBLIC_IS_LIVE
   ? []
   : [
       {
+        hostname: '*.payloadcms.local',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         port: '3000',
@@ -37,6 +40,17 @@ const localhost = process.env.NEXT_PUBLIC_IS_LIVE
       },
     ]
 
+const domain = [
+  {
+    hostname: 'payloadcms.local',
+  },
+  {
+    protocol: 'http',
+    hostname: 'localhost',
+    port: '3000',
+  },
+]
+
 const nextConfig = withBundleAnalyzer({
   eslint: {
     ignoreDuringBuilds: true,
@@ -45,25 +59,11 @@ const nextConfig = withBundleAnalyzer({
   images: {
     minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year,
     remotePatterns: [
-      ...localhost,
+      // ...localhost,
+      ...domain,
       {
         protocol: 'https',
-        hostname: 'cms.payloadcms.com',
-        port: '',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cloud-api.payloadcms.com',
-        port: '',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cms.local.payloadcms.com',
-        port: '',
-      },
-      {
-        protocol: 'https',
-        hostname: 'stage.cms.payloadcms.com',
+        hostname: '*.public.blob.vercel-storage.com',
         port: '',
       },
       {
@@ -80,10 +80,6 @@ const nextConfig = withBundleAnalyzer({
         protocol: 'https',
         hostname: 'img.youtube.com',
         port: '',
-      },
-      {
-        protocol: 'https',
-        hostname: process.env.BLOB_STORE_ID,
       },
     ].filter(Boolean),
   },

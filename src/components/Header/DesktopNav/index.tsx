@@ -7,7 +7,6 @@ import { GitHubIcon } from '@root/graphics/GitHub/index.js'
 import { ArrowIcon } from '@root/icons/ArrowIcon/index.js'
 import { useAuth } from '@root/providers/Auth/index.js'
 import { useHeaderObserver } from '@root/providers/HeaderIntersectionObserver/index.js'
-import { useStarCount } from '@root/utilities/use-star-count.js'
 import Link from 'next/link'
 import * as React from 'react'
 
@@ -31,8 +30,6 @@ export const DesktopNav: React.FC<DesktopNavType> = ({ hideBackground, menuCta, 
 
   const menuItemRefs = [] as (HTMLButtonElement | null)[]
   const dropdownMenuRefs = [] as (HTMLDivElement | null)[]
-
-  const starCount = useStarCount()
 
   React.useEffect(() => {
     if (activeTab !== undefined) {
@@ -279,7 +276,6 @@ export const DesktopNav: React.FC<DesktopNavType> = ({ hideBackground, menuCta, 
                 target="_blank"
               >
                 <GitHubIcon />
-                {starCount}
               </a>
               {user ? (
                 <Avatar className={classes.avatar} />

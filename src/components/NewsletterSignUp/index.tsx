@@ -57,11 +57,11 @@ export const NewsletterSignUp: React.FC<NewsletterSignUpProps> = (props) => {
       setError(undefined)
 
       try {
-        const formID = process.env.NEXT_PUBLIC_NEWSLETTER_FORM_ID
+        const formID = process.env.NEXT_PUBLIC_NEWSLETTER_FORM_ID || ''
         const hubspotCookie = getCookie('hubspotutk')
         const pageUri = `${process.env.NEXT_PUBLIC_SITE_URL}${pathname}`
         const slugParts = pathname?.split('/')
-        const pageName = slugParts?.at(-1) === '' ? 'Home' : slugParts?.at(-1)
+        const pageName = slugParts?.at(-1) === '' ? 'home' : slugParts?.at(-1)
         toast.promise(
           fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/api/form-submissions`, {
             body: JSON.stringify({

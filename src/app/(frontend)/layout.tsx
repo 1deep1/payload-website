@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { GoogleAnalytics } from '@components/Analytics/GoogleAnalytics/index.js'
 import { GoogleTagManager } from '@components/Analytics/GoogleTagManager/index.js'
+import { HubSpot } from '@components/Analytics/HubSpot/index.js'
 import { PrivacyBanner } from '@components/PrivacyBanner/index.js'
 import { Providers } from '@providers/index.js'
 import { PrivacyProvider } from '@root/providers/Privacy/index.js'
@@ -27,6 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </head>
         <body className={[GeistMono.variable, untitledSans.variable].join(' ')}>
           <GoogleTagManager />
+          <HubSpot />
           <Providers>
             {children}
             <PrivacyBanner />

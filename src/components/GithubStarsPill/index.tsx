@@ -1,11 +1,11 @@
 'use client'
 
-import { useStarCount } from '@root/utilities/use-star-count.js'
+// import { useStarCount } from '@root/utilities/use-star-count.js'
 
 import classes from './index.module.scss'
 
 export const GithubStarsPill: React.FC<{ className?: string }> = ({ className }) => {
-  const starCount = useStarCount()
+  // const starCount = useStarCount()
 
   return (
     <div className={[classes.pill, className].filter(Boolean).join(' ')}>
@@ -18,7 +18,7 @@ export const GithubStarsPill: React.FC<{ className?: string }> = ({ className })
         </svg>
         <p>Star</p>
       </div>
-      <div className={classes.starCount}>{starCount}</div>
+      {/* <div className={classes.starCount}>{starCount}</div> */}
     </div>
   )
 }
